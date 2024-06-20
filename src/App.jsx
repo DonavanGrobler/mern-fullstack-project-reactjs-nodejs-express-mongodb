@@ -4,7 +4,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom/cjs/react-router-dom";
-import { Users } from "./Users/pages/User";
+import { Users } from "./user/pages/Users";
 import { NewPlace } from "./places/pages/NewPlace";
 
 const App = () => {
