@@ -1,6 +1,6 @@
 import { UsersList } from "../components/UsersList";
 
-export const Users = () => {
+const Users = () => {
   const USERS = [
     {
       id: "u1",
@@ -13,3 +13,5 @@ export const Users = () => {
 
   return <UsersList items={USERS} />;
 };
+
+export default Users;
