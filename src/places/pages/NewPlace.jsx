@@ -1,5 +1,7 @@
+import React from 'react';
+
 const NewPlace = () => {
-  return <h1>This is the PLACES page</h1>;
+  return <h2>NewPlace Works!</h2>
 };
 
 export default NewPlace;
