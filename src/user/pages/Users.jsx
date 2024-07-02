@@ -2,45 +2,34 @@ import { UsersList } from "../components/UsersList";
 import { useEffect, useState } from "react";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const Users = () => {
-  const [islLoading, setIslLoading] = useState(false);
-  const [error, setError] = useState();
   const [loadedUsers, setLoadedUsers] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   useEffect(() => {
-    const sendRequest = async () => {
-      setIslLoading(true);
+    const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/users/");
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/"
+        );
 
         setLoadedUsers(responseData.users);
-      } catch (err) {
-        setError(err.message);
-      }
-      setIslLoading(false);
+      } catch (err) {}
     };
-    sendRequest();
-  }, []);
-
-  const errorHandler = () => {
-    setError(null);
-  };
+    fetchUsers();
+  }, [sendRequest]);
 
   return (
     <>
-      <ErrorModal error={error} onClear={errorHandler} />
-      {islLoading && (
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
         <div className="center">
           <LoadingSpinner />
         </div>
       )}
-      {!islLoading && loadedUsers && <UsersList items={loadedUsers} />}
+      {!isLoading && loadedUsers && <UsersList items={loadedUsers} />}
     </>
   );
 };
