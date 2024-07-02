@@ -33,12 +33,13 @@ export const useHttpClient = () => {
         setIsLoading(false);
         return responseData;
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was aborted");
-        } else {
+        if (err.name !== "AbortError") {
           setError(err.message || "Something went wrong");
           setIsLoading(false);
         }
+        activeHttpRequests.current = activeHttpRequests.current.filter(
+          (reqCtrl) => reqCtrl !== httpAbortCtrl
+        );
         throw err;
       }
     },
@@ -48,12 +49,6 @@ export const useHttpClient = () => {
   const clearError = () => {
     setError(null);
   };
-
-  useEffect(() => {
-    return () => {
-      activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
-    };
-  }, []);
 
   return { isLoading, error, sendRequest, clearError };
 };
