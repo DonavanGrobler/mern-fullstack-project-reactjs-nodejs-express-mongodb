@@ -40,7 +40,7 @@ const UpdatePlace = () => {
     const fetchData = async () => {
       try {
         const responseData = await sendRequest(
-          process.env.VITE_BACKEND_URL + `/places/${placeId}`
+          import.meta.env.VITE_BACKEND_URL + `/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
         setFormData(

@@ -31,7 +31,7 @@ const PlaceItem = (props) => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
-        process.env.VITE_BACKEND_URL + `/places/${props.id}`,
+        import.meta.env.VITE_BACKEND_URL + `/places/${props.id}`,
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }
